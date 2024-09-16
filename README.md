@@ -19,37 +19,20 @@ Application:
 ```
 
 
-
- This program provides:
- ------------
-* Markerless, color-, shape-based object tracking with a single USB Webcam at a rate up to 150 Hz.
-* Produces video file and data spreadsheet in csv format.
-* Timetagged files 
-* Snapshot of the board that remembers the coordinates of the board targets. 
-* Runs in both windows and mac OS.
-* Graphcial User Interface (GUI)
-* Many more features
-* Update to be followed.
-
-
-
-![Libraries](resources/fig_magictable_illustration.jpg?raw=true)
-**Figure**. MAGIC Table Design Illustration. A) An RGB web camera is mounted on the stand that is fixed above the center fo the board and adjusted to have a full table as its field-of-view.   B) Design of a 3D printed cup as a controller / object to track.  
-
 Requirements
 ------------
-Build in python3.6
+Build in python3.10
 ```bash
 pip install pygame numpy ... (many more)
 ```
-* For windows system, download the python 3.6 installer (web-based, or any other) and add python36 to PATH.  
+* For windows system, download the python 3.10 installer (web-based, or any other) and add python36 to PATH.  
 
-*Tip*: use Python Editor like PyCharm to easily build the environment.
-An example environment for current system (as of 2018.12.15 by Won Joon):
-Note that not all packages displayed here may be necessary to run the magic table.
 
-Snapshot of PyCharm Project setting.
-![Libraries](resources/python_libraries_2019.4.png?raw=true)
+How to operate (in command line for Live Lead Migration, ignore the instructions below )
+------
+1. Run as: `>python main.py` + options.  (e.g. `>python main.py -mod "play")
+
+
 
 
 How to operate (in command line)
@@ -86,18 +69,11 @@ How to play in GUI : a preferred way
 2. GUI window with argument options will be presented. Click "Run" button after selecting options. Instructions will pop-up in the camera-alignment and snapshot stage.        
 3. Selected options are automatically saved even if the current GUI window is closed.  
 
-### Q. How to associate snapshot files with the subsequenct files? 
-* New pickle dump files are generated without retaking snapshots. 
-* TODO: snapshot files are not required to run any post processing. 
 
 ### Other options (check arguments.py)
 * **subject** [-sid]: subject ID. 
 * **note** [-nt]: leave notes for this specific trial
-* **gamenote** [-gnt]: leave game notes for this specific game trial
-* bulkrecording: not fully developed.
 * **handedness**[-hn]: Righthander:r (default), lefthander:l 
-* **idlevel** [-idl]: Index of Difficulty (ID) 1 to 4. Default: 'IDX'
-* **tasktype**[-tt]: game types: p2p (point-to-point), fig8.
 * **timed** [-t]: Set the operating time
 * **codec** [-cod]: Specify the codec of the output video file
 * **thread** [-th]: Whether or not to use thread in reading frames
@@ -106,10 +82,7 @@ How to play in GUI : a preferred way
 #### Tracking
 * **marker** [-m]: Specify the tracking algorithm. (e.g. el_object, cl_object)
 
-#### Control
-* **gametest** [-gt]: Game Test mode- 1 if using mouse or keyboard control. This controller overwrites opencv tracking. 
-    * **keyboard_control** [-kc]: Keyboard control of pygame
-    * **discrete_control** [-dc]: Discrete control of pygame
+
 
 #### Display
 * **display** [-d]: Whether or not the webcam frames should be displayed
@@ -152,34 +125,12 @@ MAGIC_TABLE_Root
         |_snapshots
         |_pickles
         |_dataframeOutput
-    |_ games  
-        |_ ‘game_name’
-            |_assets
-            |_stage
-            |_Output: (x, y, xb, yb, score. local time). obstacle’s coordinate when they appears. 
-
-
-## Output file structure:
-
-MAGIC_TABLE_Root
-    |_ Output: (time, x, y, xb, yb) 
-        |_videoOutput
-        |_snapshots
-        |_pickles
-        |_dataframeOutput
-    |_ games  
-        |_ ‘game_name’
-            |_Output: (x, y, xb, yb, score. local time). obstacle’s coordinate when they appears. 
-
 
 
 
 General output filename convention: [timestamp_mode_subjectID_success.csv]
 e.g. 20180910_134223_NT0_success.csv
 
-## Pygame feature
-
-* Traffic_dodger game is developed. 
 
 ## Additional files
 
@@ -213,18 +164,3 @@ PIM1 / mp4 / similar to XVID /     MPEG-1 Codec
 
 ** There could be "OpenCV FFMPEG" related warning message with a codec 'XVID'. This is about codec and extension matching.  This warning can be ignored if you care less about output video file size not being optimally small.   
 
-### * Raspberry Pi 3: Python opencv installation option. (as of Sep. 2017) 
-```
-# -*- coding: utf-8 -*-
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
--D CMAKE_INSTALL_PREFIX=/usr/local \
--D OPENCV_EXTRA_MODULES_PATH=~/opencv_contrib/modules \
--D PYTHON2_LIBRARY=/usr/local/Cellar/python/2.7.13/Frameworks/Python.framework/Versions/2.7/lib/python2.7/config/libpython2.7.dylib \
--D PYTHON2_INCLUDE_DIR=/usr/local/Cellar/python/2.7.13/Frameworks/Python.framework/Versions/2.7/include/python2.7/ \
--D PYTHON2_EXECUTABLE=$VIRTUAL_ENV/bin/python \
--D BUILD_opencv_python2=ON \
--D BUILD_opencv_python3=OFF \
--D INSTALL_PYTHON_EXAMPLES=ON \
--D INSTALL_C_EXAMPLES=OFF \
--D BUILD_EXAMPLES=ON ..\
-```
